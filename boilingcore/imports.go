@@ -152,7 +152,6 @@ type importer struct {
 
 	TestMain mapImports
 
-	BasedOnType mapImports
 }
 
 // newImporter returns an importer struct with default import values
@@ -161,87 +160,44 @@ func newImporter() importer {
 
 	imp.Standard = imports{
 		standard: importList{
-			`"bytes"`,
-			`"database/sql"`,
-			`"fmt"`,
-			`"reflect"`,
-			`"strings"`,
-			`"sync"`,
-			`"time"`,
 		},
 		thirdParty: importList{
-			`"github.com/pkg/errors"`,
-			`"github.com/volatiletech/sqlboiler/boil"`,
-			`"github.com/volatiletech/sqlboiler/queries"`,
-			`"github.com/volatiletech/sqlboiler/queries/qm"`,
-			`"github.com/volatiletech/sqlboiler/strmangle"`,
 		},
 	}
 
 	imp.Singleton = mapImports{
 		"boil_queries": {
 			thirdParty: importList{
-				`"github.com/volatiletech/sqlboiler/boil"`,
-				`"github.com/volatiletech/sqlboiler/queries"`,
-				`"github.com/volatiletech/sqlboiler/queries/qm"`,
 			},
 		},
 		"boil_types": {
 			thirdParty: importList{
-				`"github.com/pkg/errors"`,
-				`"github.com/volatiletech/sqlboiler/strmangle"`,
 			},
 		},
 	}
 
 	imp.TestStandard = imports{
 		standard: importList{
-			`"bytes"`,
-			`"reflect"`,
-			`"testing"`,
 		},
 		thirdParty: importList{
-			`"github.com/volatiletech/sqlboiler/boil"`,
-			`"github.com/volatiletech/sqlboiler/randomize"`,
-			`"github.com/volatiletech/sqlboiler/strmangle"`,
 		},
 	}
 
 	imp.TestSingleton = mapImports{
 		"boil_main_test": {
 			standard: importList{
-				`"database/sql"`,
-				`"flag"`,
-				`"fmt"`,
-				`"math/rand"`,
-				`"os"`,
-				`"path/filepath"`,
-				`"testing"`,
-				`"time"`,
 			},
 			thirdParty: importList{
-				`"github.com/kat-co/vala"`,
-				`"github.com/pkg/errors"`,
-				`"github.com/spf13/viper"`,
-				`"github.com/volatiletech/sqlboiler/boil"`,
 			},
 		},
 		"boil_queries_test": {
 			standard: importList{
-				`"bytes"`,
-				`"fmt"`,
-				`"io"`,
-				`"io/ioutil"`,
-				`"math/rand"`,
-				`"regexp"`,
 			},
 			thirdParty: importList{
-				`"github.com/volatiletech/sqlboiler/boil"`,
 			},
 		},
 		"boil_suites_test": {
 			standard: importList{
-				`"testing"`,
 			},
 		},
 	}
@@ -249,57 +205,20 @@ func newImporter() importer {
 	imp.TestMain = mapImports{
 		"postgres": {
 			standard: importList{
-				`"bytes"`,
-				`"database/sql"`,
-				`"fmt"`,
-				`"io"`,
-				`"io/ioutil"`,
-				`"os"`,
-				`"os/exec"`,
-				`"strings"`,
 			},
 			thirdParty: importList{
-				`"github.com/pkg/errors"`,
-				`"github.com/spf13/viper"`,
-				`"github.com/volatiletech/sqlboiler/bdb/drivers"`,
-				`"github.com/volatiletech/sqlboiler/randomize"`,
-				`_ "github.com/lib/pq"`,
 			},
 		},
 		"mysql": {
 			standard: importList{
-				`"bytes"`,
-				`"database/sql"`,
-				`"fmt"`,
-				`"io"`,
-				`"io/ioutil"`,
-				`"os"`,
-				`"os/exec"`,
-				`"strings"`,
 			},
 			thirdParty: importList{
-				`"github.com/pkg/errors"`,
-				`"github.com/spf13/viper"`,
-				`"github.com/volatiletech/sqlboiler/bdb/drivers"`,
-				`"github.com/volatiletech/sqlboiler/randomize"`,
-				`_ "github.com/go-sql-driver/mysql"`,
 			},
 		},
 		"mssql": {
 			standard: importList{
-				`"bytes"`,
-				`"database/sql"`,
-				`"fmt"`,
-				`"os"`,
-				`"os/exec"`,
-				`"strings"`,
 			},
 			thirdParty: importList{
-				`"github.com/pkg/errors"`,
-				`"github.com/spf13/viper"`,
-				`"github.com/volatiletech/sqlboiler/bdb/drivers"`,
-				`"github.com/volatiletech/sqlboiler/randomize"`,
-				`_ "github.com/denisenkom/go-mssqldb"`,
 			},
 		},
 	}
@@ -308,81 +227,6 @@ func newImporter() importer {
 	// database requires one of the following special types. Check
 	// TranslateColumnType to see the type assignments.
 	imp.BasedOnType = mapImports{
-		"null.Float32": {
-			thirdParty: importList{`"gopkg.in/volatiletech/null.v6"`},
-		},
-		"null.Float64": {
-			thirdParty: importList{`"gopkg.in/volatiletech/null.v6"`},
-		},
-		"null.Int": {
-			thirdParty: importList{`"gopkg.in/volatiletech/null.v6"`},
-		},
-		"null.Int8": {
-			thirdParty: importList{`"gopkg.in/volatiletech/null.v6"`},
-		},
-		"null.Int16": {
-			thirdParty: importList{`"gopkg.in/volatiletech/null.v6"`},
-		},
-		"null.Int32": {
-			thirdParty: importList{`"gopkg.in/volatiletech/null.v6"`},
-		},
-		"null.Int64": {
-			thirdParty: importList{`"gopkg.in/volatiletech/null.v6"`},
-		},
-		"null.Uint": {
-			thirdParty: importList{`"gopkg.in/volatiletech/null.v6"`},
-		},
-		"null.Uint8": {
-			thirdParty: importList{`"gopkg.in/volatiletech/null.v6"`},
-		},
-		"null.Uint16": {
-			thirdParty: importList{`"gopkg.in/volatiletech/null.v6"`},
-		},
-		"null.Uint32": {
-			thirdParty: importList{`"gopkg.in/volatiletech/null.v6"`},
-		},
-		"null.Uint64": {
-			thirdParty: importList{`"gopkg.in/volatiletech/null.v6"`},
-		},
-		"null.String": {
-			thirdParty: importList{`"gopkg.in/volatiletech/null.v6"`},
-		},
-		"null.Bool": {
-			thirdParty: importList{`"gopkg.in/volatiletech/null.v6"`},
-		},
-		"null.Time": {
-			thirdParty: importList{`"gopkg.in/volatiletech/null.v6"`},
-		},
-		"null.JSON": {
-			thirdParty: importList{`"gopkg.in/volatiletech/null.v6"`},
-		},
-		"null.Bytes": {
-			thirdParty: importList{`"gopkg.in/volatiletech/null.v6"`},
-		},
-		"time.Time": {
-			standard: importList{`"time"`},
-		},
-		"types.JSON": {
-			thirdParty: importList{`"github.com/volatiletech/sqlboiler/types"`},
-		},
-		"types.BytesArray": {
-			thirdParty: importList{`"github.com/volatiletech/sqlboiler/types"`},
-		},
-		"types.Int64Array": {
-			thirdParty: importList{`"github.com/volatiletech/sqlboiler/types"`},
-		},
-		"types.Float64Array": {
-			thirdParty: importList{`"github.com/volatiletech/sqlboiler/types"`},
-		},
-		"types.BoolArray": {
-			thirdParty: importList{`"github.com/volatiletech/sqlboiler/types"`},
-		},
-		"types.StringArray": {
-			thirdParty: importList{`"github.com/volatiletech/sqlboiler/types"`},
-		},
-		"types.Hstore": {
-			thirdParty: importList{`"github.com/volatiletech/sqlboiler/types"`},
-		},
 	}
 
 	return imp

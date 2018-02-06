@@ -109,8 +109,8 @@ func executeTemplates(e executeTemplateData) error {
 	}
 
 	writeFileDisclaimer(out)
-	writePackageName(out, e.state.Config.PkgName)
-	writeImports(out, imps)
+	// writePackageName(out, e.state.Config.PkgName)
+	// writeImports(out, imps)
 
 	for _, tplName := range e.templates.Templates() {
 		if err := executeTemplate(out, e.templates.Template, tplName, e.data); err != nil {
@@ -145,8 +145,8 @@ func executeSingletonTemplates(e executeTemplateData) error {
 		}
 
 		writeFileDisclaimer(out)
-		writePackageName(out, e.state.Config.PkgName)
-		writeImports(out, imps)
+		// writePackageName(out, e.state.Config.PkgName)
+		// writeImports(out, imps)
 
 		if err := executeTemplate(out, e.templates.Template, tplName, e.data); err != nil {
 			return err
@@ -173,8 +173,8 @@ func generateTestMainOutput(state *State, data *templateData) error {
 	imps.thirdParty = state.Importer.TestMain[state.Config.DriverName].thirdParty
 
 	writeFileDisclaimer(out)
-	writePackageName(out, state.Config.PkgName)
-	writeImports(out, imps)
+//	writePackageName(out, state.Config.PkgName)
+//	writeImports(out, imps)
 
 	if err := executeTemplate(out, state.TestMainTemplate, state.TestMainTemplate.Name(), data); err != nil {
 		return err
