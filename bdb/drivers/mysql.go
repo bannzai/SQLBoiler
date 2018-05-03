@@ -233,8 +233,8 @@ func (m *MySQLDriver) PrimaryKeyInfo(schema, tableName string) (*bdb.PrimaryKey,
 }
 
 // UniqueKeyInfo looks up the unique key for a table.
-func (m *MySQLDriver) UniqueKeyInfo(schema, tableName string) (*bdb.UniqueKey, error) {
-	ukey := &bdb.UniqueKey{}
+func (m *MySQLDriver) UniqueKeyInfo(schema, tableName string) ([]bdb.UniqueKey, error) {
+	var ukeys []bdb.UniqueKey
 	var err error
 
 	query := `
@@ -242,11 +242,24 @@ func (m *MySQLDriver) UniqueKeyInfo(schema, tableName string) (*bdb.UniqueKey, e
 	from information_schema.table_constraints as tc
 	where tc.table_name = ? and tc.constraint_type = 'UNIQUE' and tc.table_schema = ?;`
 
-	row := m.dbConn.QueryRow(query, tableName, schema)
-	if err = row.Scan(&ukey.Name); err != nil {
-		if err == sql.ErrNoRows {
-			return nil, nil
+	var names []string
+	var nameRows *sql.Rows
+	if nameRows, err = m.dbConn.Query(query, tableName, schema); err != nil {
+		return nil, err
+	}
+	for nameRows.Next() {
+		var name string
+		if err = nameRows.Scan(&name); err != nil {
+			if err == sql.ErrNoRows {
+				return nil, nil
+			}
+			return nil, err
 		}
+		names = append(names, name)
+	}
+	defer nameRows.Close()
+
+	if err = nameRows.Err(); err != nil {
 		return nil, err
 	}
 
@@ -255,31 +268,36 @@ func (m *MySQLDriver) UniqueKeyInfo(schema, tableName string) (*bdb.UniqueKey, e
 	from   information_schema.key_column_usage as kcu
 	where  table_name = ? and constraint_name = ? and table_schema = ?;`
 
-	var rows *sql.Rows
-	if rows, err = m.dbConn.Query(queryColumns, tableName, ukey.Name, schema); err != nil {
-		return nil, err
-	}
-	defer rows.Close()
+	var columnRows *sql.Rows
+	for _, name := range names {
+		if columnRows, err = m.dbConn.Query(queryColumns, tableName, name, schema); err != nil {
+			return nil, err
+		}
+		defer columnRows.Close()
 
-	var columns []string
-	for rows.Next() {
-		var column string
+		var ukey bdb.UniqueKey
+		ukey.Name = name
+		var columns []string
+		for columnRows.Next() {
+			var column string
 
-		err = rows.Scan(&column)
-		if err != nil {
+			err = columnRows.Scan(&column)
+			if err != nil {
+				return nil, err
+			}
+
+			columns = append(columns, column)
+		}
+
+		if err = columnRows.Err(); err != nil {
 			return nil, err
 		}
 
-		columns = append(columns, column)
+		ukey.Columns = columns
+		ukeys = append(ukeys, ukey)
 	}
 
-	if err = rows.Err(); err != nil {
-		return nil, err
-	}
-
-	ukey.Columns = columns
-
-	return ukey, nil
+	return ukeys, nil
 }
 
 // ForeignKeyInfo retrieves the foreign keys for a given table name.
