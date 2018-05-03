@@ -1,6 +1,7 @@
 package drivers
 
 import (
+	"github.com/pkg/errors"
 	"github.com/volatiletech/sqlboiler/bdb"
 	"github.com/volatiletech/sqlboiler/strmangle"
 )
@@ -113,6 +114,11 @@ func (m *MockDriver) PrimaryKeyInfo(schema, tableName string) (*bdb.PrimaryKey, 
 			Columns: []string{"pilot_id", "language_id"},
 		},
 	}[tableName], nil
+}
+
+// UniqueKeyInfo looks up the unique key for a table.
+func (m *MockDriver) UniqueKeyInfo(schema, tableName string) (*bdb.UniqueKey, error) {
+	return nil, errors.New("")
 }
 
 // UseLastInsertID returns a database mock LastInsertID compatibility flag

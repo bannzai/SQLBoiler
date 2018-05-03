@@ -266,6 +266,11 @@ func (p *PostgresDriver) PrimaryKeyInfo(schema, tableName string) (*bdb.PrimaryK
 	return pkey, nil
 }
 
+// UniqueKeyInfo looks up the unique key for a table.
+func (p *PostgresDriver) UniqueKeyInfo(schema, tableName string) (*bdb.UniqueKey, error) {
+	return nil, errors.New("")
+}
+
 // ForeignKeyInfo retrieves the foreign keys for a given table name.
 func (p *PostgresDriver) ForeignKeyInfo(schema, tableName string) ([]bdb.ForeignKey, error) {
 	var fkeys []bdb.ForeignKey

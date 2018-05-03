@@ -241,6 +241,11 @@ func (m *MSSQLDriver) PrimaryKeyInfo(schema, tableName string) (*bdb.PrimaryKey,
 	return pkey, nil
 }
 
+// UniqueKeyInfo looks up the unique key for a table.
+func (m *MSSQLDriver) UniqueKeyInfo(schema, tableName string) (*bdb.UniqueKey, error) {
+	return nil, errors.New("")
+}
+
 // ForeignKeyInfo retrieves the foreign keys for a given table name.
 func (m *MSSQLDriver) ForeignKeyInfo(schema, tableName string) ([]bdb.ForeignKey, error) {
 	var fkeys []bdb.ForeignKey

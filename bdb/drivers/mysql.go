@@ -232,6 +232,56 @@ func (m *MySQLDriver) PrimaryKeyInfo(schema, tableName string) (*bdb.PrimaryKey,
 	return pkey, nil
 }
 
+// UniqueKeyInfo looks up the unique key for a table.
+func (m *MySQLDriver) UniqueKeyInfo(schema, tableName string) (*bdb.UniqueKey, error) {
+	ukey := &bdb.UniqueKey{}
+	var err error
+
+	query := `
+	select tc.constraint_name
+	from information_schema.table_constraints as tc
+	where tc.table_name = ? and tc.constraint_type = 'UNIQUE' and tc.table_schema = ?;`
+
+	row := m.dbConn.QueryRow(query, tableName, schema)
+	if err = row.Scan(&ukey.Name); err != nil {
+		if err == sql.ErrNoRows {
+			return nil, nil
+		}
+		return nil, err
+	}
+
+	queryColumns := `
+	select kcu.column_name
+	from   information_schema.key_column_usage as kcu
+	where  table_name = ? and constraint_name = ? and table_schema = ?;`
+
+	var rows *sql.Rows
+	if rows, err = m.dbConn.Query(queryColumns, tableName, ukey.Name, schema); err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	var columns []string
+	for rows.Next() {
+		var column string
+
+		err = rows.Scan(&column)
+		if err != nil {
+			return nil, err
+		}
+
+		columns = append(columns, column)
+	}
+
+	if err = rows.Err(); err != nil {
+		return nil, err
+	}
+
+	ukey.Columns = columns
+
+	return ukey, nil
+}
+
 // ForeignKeyInfo retrieves the foreign keys for a given table name.
 func (m *MySQLDriver) ForeignKeyInfo(schema, tableName string) ([]bdb.ForeignKey, error) {
 	var fkeys []bdb.ForeignKey

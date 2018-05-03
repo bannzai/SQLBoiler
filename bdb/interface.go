@@ -14,6 +14,7 @@ type Interface interface {
 	TableNames(schema string, whitelist, blacklist []string) ([]string, error)
 	Columns(schema, tableName string) ([]Column, error)
 	PrimaryKeyInfo(schema, tableName string) (*PrimaryKey, error)
+	UniqueKeyInfo(schema, tableName string) (*UniqueKey, error)
 	ForeignKeyInfo(schema, tableName string) ([]ForeignKey, error)
 
 	// TranslateColumnType takes a Database column type and returns a go column type.
@@ -99,7 +100,7 @@ func filterForeignKeys(t *Table, whitelist, blacklist []string) {
 	var fkeys []ForeignKey
 	for _, fkey := range t.FKeys {
 		if (len(whitelist) == 0 || strmangle.SetInclude(fkey.ForeignTable, whitelist)) &&
-		(len(blacklist) == 0 || !strmangle.SetInclude(fkey.ForeignTable, blacklist)) {
+			(len(blacklist) == 0 || !strmangle.SetInclude(fkey.ForeignTable, blacklist)) {
 			fkeys = append(fkeys, fkey)
 		}
 	}
