@@ -241,8 +241,8 @@ func (m *MSSQLDriver) PrimaryKeyInfo(schema, tableName string) (*bdb.PrimaryKey,
 	return pkey, nil
 }
 
-// ComplexUniqueKeyInfo looks up the unique key for a table.
-func (m *MSSQLDriver) ComplexUniqueKeyInfo(schema, tableName string) (*bdb.ComplexUniqueKey, error) {
+// UniqueKeyInfo looks up the unique key for a table.
+func (m *MSSQLDriver) UniqueKeyInfo(schema, tableName string) (*bdb.UniqueKey, error) {
 	return nil, errors.New("")
 }
 

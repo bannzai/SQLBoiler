@@ -14,7 +14,7 @@ type Interface interface {
 	TableNames(schema string, whitelist, blacklist []string) ([]string, error)
 	Columns(schema, tableName string) ([]Column, error)
 	PrimaryKeyInfo(schema, tableName string) (*PrimaryKey, error)
-	ComplexUniqueKeyInfo(schema, tableName string) (*ComplexUniqueKey, error)
+	UniqueKeyInfo(schema, tableName string) (*UniqueKey, error)
 	ForeignKeyInfo(schema, tableName string) ([]ForeignKey, error)
 
 	// TranslateColumnType takes a Database column type and returns a go column type.

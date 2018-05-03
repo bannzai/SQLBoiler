@@ -232,9 +232,9 @@ func (m *MySQLDriver) PrimaryKeyInfo(schema, tableName string) (*bdb.PrimaryKey,
 	return pkey, nil
 }
 
-// ComplexUniqueKeyInfo looks up the unique key for a table.
-func (m *MySQLDriver) ComplexUniqueKeyInfo(schema, tableName string) (*bdb.ComplexUniqueKey, error) {
-	ukey := &bdb.ComplexUniqueKey{}
+// UniqueKeyInfo looks up the unique key for a table.
+func (m *MySQLDriver) UniqueKeyInfo(schema, tableName string) (*bdb.UniqueKey, error) {
+	ukey := &bdb.UniqueKey{}
 	var err error
 
 	query := `
