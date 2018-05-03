@@ -116,8 +116,8 @@ func (m *MockDriver) PrimaryKeyInfo(schema, tableName string) (*bdb.PrimaryKey, 
 	}[tableName], nil
 }
 
-// UniqueKeyInfo looks up the unique key for a table.
-func (m *MockDriver) UniqueKeyInfo(schema, tableName string) (*bdb.UniqueKey, error) {
+// ComplexUniqueKeyInfo looks up the unique key for a table.
+func (m *MockDriver) ComplexUniqueKeyInfo(schema, tableName string) (*bdb.ComplexUniqueKey, error) {
 	return nil, errors.New("")
 }
 

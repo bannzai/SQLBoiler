@@ -8,8 +8,8 @@ type PrimaryKey struct {
 	Columns []string
 }
 
-// UniqueKey represents a unique key constraint in a database
-type UniqueKey struct {
+// ComplexUniqueKey represents a complex unique key constraint in a database
+type ComplexUniqueKey struct {
 	Name    string
 	Columns []string
 }
