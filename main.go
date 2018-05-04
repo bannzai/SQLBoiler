@@ -7,11 +7,11 @@ import (
 	"path/filepath"
 	"strings"
 
+	"github.com/bannzai/sqlboiler_bannzai/bdb/drivers"
+	"github.com/bannzai/sqlboiler_bannzai/boilingcore"
 	"github.com/kat-co/vala"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
-	"github.com/volatiletech/sqlboiler/bdb/drivers"
-	"github.com/volatiletech/sqlboiler/boilingcore"
 )
 
 const sqlBoilerVersion = "2.6.0"

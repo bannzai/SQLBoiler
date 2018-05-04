@@ -12,11 +12,11 @@ import (
 	"strings"
 	"text/template"
 
+	"github.com/bannzai/sqlboiler_bannzai/bdb"
+	"github.com/bannzai/sqlboiler_bannzai/bdb/drivers"
+	"github.com/bannzai/sqlboiler_bannzai/queries"
+	"github.com/bannzai/sqlboiler_bannzai/strmangle"
 	"github.com/pkg/errors"
-	"github.com/volatiletech/sqlboiler/bdb"
-	"github.com/volatiletech/sqlboiler/bdb/drivers"
-	"github.com/volatiletech/sqlboiler/queries"
-	"github.com/volatiletech/sqlboiler/strmangle"
 )
 
 const (
@@ -269,7 +269,7 @@ func (s *State) processReplacements() error {
 	return nil
 }
 
-var basePackage = "github.com/volatiletech/sqlboiler"
+var basePackage = "github.com/bannzai/sqlboiler_bannzai"
 
 func getBasePath(baseDirConfig string) (string, error) {
 	if len(baseDirConfig) > 0 {

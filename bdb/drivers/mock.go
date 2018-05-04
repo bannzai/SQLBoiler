@@ -1,9 +1,9 @@
 package drivers
 
 import (
+	"github.com/bannzai/sqlboiler_bannzai/bdb"
+	"github.com/bannzai/sqlboiler_bannzai/strmangle"
 	"github.com/pkg/errors"
-	"github.com/volatiletech/sqlboiler/bdb"
-	"github.com/volatiletech/sqlboiler/strmangle"
 )
 
 // MockDriver is a mock implementation of the bdb driver Interface

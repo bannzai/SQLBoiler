@@ -7,9 +7,9 @@ import (
 	"strings"
 	"sync"
 
+	"github.com/bannzai/sqlboiler_bannzai/boil"
+	"github.com/bannzai/sqlboiler_bannzai/strmangle"
 	"github.com/pkg/errors"
-	"github.com/volatiletech/sqlboiler/boil"
-	"github.com/volatiletech/sqlboiler/strmangle"
 )
 
 var (

@@ -5,8 +5,8 @@ import (
 	"sort"
 	"testing"
 
+	"github.com/bannzai/sqlboiler_bannzai/bdb"
 	"github.com/pkg/errors"
-	"github.com/volatiletech/sqlboiler/bdb"
 )
 
 func TestImportsSort(t *testing.T) {
@@ -234,7 +234,7 @@ func TestCombineTypeImports(t *testing.T) {
 			`"fmt"`,
 		},
 		thirdParty: importList{
-			`"github.com/volatiletech/sqlboiler/boil"`,
+			`"github.com/bannzai/sqlboiler_bannzai/boil"`,
 		},
 	}
 
@@ -245,7 +245,7 @@ func TestCombineTypeImports(t *testing.T) {
 			`"time"`,
 		},
 		thirdParty: importList{
-			`"github.com/volatiletech/sqlboiler/boil"`,
+			`"github.com/bannzai/sqlboiler_bannzai/boil"`,
 			`"gopkg.in/volatiletech/null.v6"`,
 		},
 	}
@@ -280,7 +280,7 @@ func TestCombineTypeImports(t *testing.T) {
 			`"time"`,
 		},
 		thirdParty: importList{
-			`"github.com/volatiletech/sqlboiler/boil"`,
+			`"github.com/bannzai/sqlboiler_bannzai/boil"`,
 			`"gopkg.in/volatiletech/null.v6"`,
 		},
 	}
@@ -297,11 +297,11 @@ func TestCombineImports(t *testing.T) {
 
 	a := imports{
 		standard:   importList{"fmt"},
-		thirdParty: importList{"github.com/volatiletech/sqlboiler", "gopkg.in/volatiletech/null.v6"},
+		thirdParty: importList{"github.com/bannzai/sqlboiler_bannzai", "gopkg.in/volatiletech/null.v6"},
 	}
 	b := imports{
 		standard:   importList{"os"},
-		thirdParty: importList{"github.com/volatiletech/sqlboiler"},
+		thirdParty: importList{"github.com/bannzai/sqlboiler_bannzai"},
 	}
 
 	c := combineImports(a, b)
@@ -309,7 +309,7 @@ func TestCombineImports(t *testing.T) {
 	if c.standard[0] != "fmt" && c.standard[1] != "os" {
 		t.Errorf("Wanted: fmt, os got: %#v", c.standard)
 	}
-	if c.thirdParty[0] != "github.com/volatiletech/sqlboiler" && c.thirdParty[1] != "gopkg.in/volatiletech/null.v6" {
+	if c.thirdParty[0] != "github.com/bannzai/sqlboiler_bannzai" && c.thirdParty[1] != "gopkg.in/volatiletech/null.v6" {
 		t.Errorf("Wanted: github.com/volatiletech/sqlboiler, gopkg.in/volatiletech/null.v6 got: %#v", c.thirdParty)
 	}
 }

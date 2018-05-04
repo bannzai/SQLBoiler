@@ -8,10 +8,10 @@ import (
 	"strings"
 	"text/template"
 
+	"github.com/bannzai/sqlboiler_bannzai/bdb"
+	"github.com/bannzai/sqlboiler_bannzai/queries"
+	"github.com/bannzai/sqlboiler_bannzai/strmangle"
 	"github.com/pkg/errors"
-	"github.com/volatiletech/sqlboiler/bdb"
-	"github.com/volatiletech/sqlboiler/queries"
-	"github.com/volatiletech/sqlboiler/strmangle"
 )
 
 // templateData for sqlboiler templates

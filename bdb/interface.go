@@ -4,8 +4,8 @@ package bdb
 import (
 	"sort"
 
+	"github.com/bannzai/sqlboiler_bannzai/strmangle"
 	"github.com/pkg/errors"
-	"github.com/volatiletech/sqlboiler/strmangle"
 )
 
 // Interface for a database driver. Functionality required to support a specific
